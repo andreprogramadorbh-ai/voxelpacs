@@ -1,0 +1,27 @@
+# Dependências
+/vendor/
+
+# Ambiente
+.env
+.env.local
+
+# Logs e uploads
+/storage/logs/*
+/storage/uploads/*
+/storage/sessions/*
+!/storage/logs/.gitkeep
+!/storage/uploads/.gitkeep
+!/storage/sessions/.gitkeep
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Composer lock (opcional em projetos proprietários)
+# composer.lock

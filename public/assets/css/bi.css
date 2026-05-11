@@ -1,0 +1,50 @@
+/* ============================================================
+   VOXEL B.I — Estilos Principais
+   ============================================================ */
+
+:root {
+    --voxel-primary:   #3b82f6;
+    --voxel-secondary: #8b5cf6;
+    --voxel-success:   #10b981;
+    --voxel-warning:   #f59e0b;
+    --voxel-danger:    #ef4444;
+    --voxel-dark:      #0f172a;
+    --voxel-sidebar:   #1e293b;
+}
+
+* { box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background: #f1f5f9; color: #1e293b; }
+
+/* ---- Sidebar ---- */
+#sidebar { transition: all .3s ease; }
+#sidebar .nav-link { border-radius: 8px; padding: .5rem .75rem; font-size: .875rem; transition: background .2s; }
+#sidebar .nav-link:hover { background: rgba(255,255,255,.1); }
+#sidebar .nav-link.active { background: var(--voxel-primary) !important; }
+
+/* ---- Cards ---- */
+.card { border-radius: 12px; }
+.card-header { border-radius: 12px 12px 0 0 !important; }
+
+/* ---- KPI Cards ---- */
+.kpi-card { transition: transform .2s, box-shadow .2s; }
+.kpi-card:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,.1) !important; }
+
+/* ---- Tables ---- */
+.table th { font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; color: #64748b; font-weight: 600; }
+.table td { font-size: .875rem; vertical-align: middle; }
+
+/* ---- Badges ---- */
+.badge-urgencia { background: #fef2f2; color: #dc2626; font-weight: 600; }
+.badge-normal   { background: #f0fdf4; color: #16a34a; font-weight: 600; }
+
+/* ---- Scrollbar ---- */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* ---- Responsive ---- */
+@media (max-width: 768px) {
+    #sidebar { min-width: 60px !important; }
+    #sidebar .nav-link span, #sidebar small, #sidebar .fw-bold { display: none; }
+}
