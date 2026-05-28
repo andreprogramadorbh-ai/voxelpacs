@@ -1,7 +1,7 @@
-<!-- Logo VOXES PACS -->
+<!-- Logo VOXEL PACS -->
 <div class="auth-logo">
-    <img src="/assets/img/logo-voxes-pacs.png"
-         alt="VOXES PACS — Smart Imaging. Secure Data. Better Care."
+    <img src="/assets/img/logo-voxel-pacs.png"
+         alt="VOXEL PACS — Smart Imaging. Secure Data. Better Care."
          style="max-width:240px;">
 </div>
 
@@ -44,7 +44,7 @@
         <div class="field-wrap">
             <i class="fa fa-envelope field-icon"></i>
             <input type="email" id="inputEmail" name="email" class="field-input"
-                   placeholder="seu@email.com" required autofocus
+                   placeholder="admin@voxelpacs.com.br" required autofocus
                    value="<?= htmlspecialchars($_POST['email'] ?? '') ?>">
         </div>
     </div>
@@ -67,7 +67,7 @@
 </form>
 
 <div class="auth-footer">
-    &copy; <?= date('Y') ?> <span>VOXES PACS</span> &mdash; Todos os direitos reservados
+    &copy; <?= date('Y') ?> <span>VOXEL PACS</span> &mdash; Todos os direitos reservados
 </div>
 
 <script>

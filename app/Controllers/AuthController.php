@@ -20,7 +20,7 @@ class AuthController extends Controller {
             $this->redirect('/dashboard');
         }
 
-        $this->view('auth/login', ['title' => 'Login — VOXES PACS'], 'auth');
+        $this->view('auth/login', ['title' => 'Login — VOXEL PACS'], 'auth');
     }
 
     public function login(): void {
@@ -34,7 +34,7 @@ class AuthController extends Controller {
 
         if (!$email || !$password) {
             $this->view('auth/login', [
-                'title' => 'Login — VOXES PACS',
+                'title' => 'Login — VOXEL PACS',
                 'error' => 'Preencha todos os campos.',
             ], 'auth');
             return;
@@ -42,7 +42,7 @@ class AuthController extends Controller {
 
         if (!Auth::login($email, $password)) {
             $this->view('auth/login', [
-                'title' => 'Login — VOXES PACS',
+                'title' => 'Login — VOXEL PACS',
                 'error' => 'E-mail ou senha incorretos.',
             ], 'auth');
             return;
@@ -89,7 +89,7 @@ class AuthController extends Controller {
         }
 
         $this->view('auth/select_tenant', [
-            'title'   => 'Selecionar Empresa — VOXES PACS',
+            'title'   => 'Selecionar Empresa — VOXEL PACS',
             'tenants' => $tenants,
         ], 'auth');
     }

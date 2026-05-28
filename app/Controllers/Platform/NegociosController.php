@@ -168,7 +168,7 @@ class NegociosController extends Controller {
         try {
             $contatos = $pdo->prepare("SELECT * FROM bi_negocio_contatos WHERE tenant_id = ? ORDER BY principal DESC, id ASC");
             $contatos->execute([$id]);
-            $contatos = $contatos->fetchAll();
+            $contatos = $contatos->fetchAll(\PDO::FETCH_ASSOC);
         } catch (\Exception $e) {}
 
         // Busca institution names (com try/catch)

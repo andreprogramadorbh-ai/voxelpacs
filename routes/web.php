@@ -2,84 +2,78 @@
 use App\Core\Router;
 
 // ============================================================
-// VOXES PACS — Rotas Web
+// VOXEL PACS — Rotas Públicas
 // ============================================================
-
-// Autenticação
-Router::get('/login',               'AuthController@showLogin');
-Router::post('/login',              'AuthController@login');
-Router::get('/logout',              'AuthController@logout');
+Router::get('/login',  'AuthController@showLogin');
+Router::post('/login', 'AuthController@login');
+Router::get('/logout', 'AuthController@logout');
 Router::get('/selecionar-empresa',  'AuthController@selectTenant');
-Router::post('/selecionar-empresa', 'AuthController@setTenant');
-Router::get('/', fn() => header('Location: /dashboard'));
+Router::post('/selecionar-empresa', 'AuthController@doSelectTenant');
 
-// Dashboard
-Router::get('/dashboard',               'DashboardController@index');
-Router::get('/api/dashboard',           'DashboardController@apiDados');
+// Raiz → worklist
+Router::get('/', fn() => header('Location: /estudos'));
 
-// Exames
-Router::get('/exames',                  'ExamesController@index');
-Router::get('/exames/{id}',             'ExamesController@detalhe');
-Router::get('/api/exames',              'ExamesController@apiDados');
-Router::get('/api/exames/exportar',     'ExamesController@exportar');
+// ============================================================
+// DASHBOARD (redireciona para /estudos)
+// ============================================================
+Router::get('/dashboard', 'DashboardController@index');
 
-// Médicos
-Router::get('/medicos',                 'MedicosController@index');
-Router::get('/medicos/{id}',            'MedicosController@detalhe');
+// ============================================================
+// WORKLIST — Estudos PACS (página principal)
+// ============================================================
+Router::get('/estudos',                'EstudosController@index');
+Router::get('/estudos/{id}/abrir',     'EstudosController@abrir');
+Router::get('/api/estudos/contadores', 'EstudosController@contadores');
 
-// Unidades, Modalidades, Financeiro, SLA
-Router::get('/unidades',                'UnidadesController@index');
-Router::get('/modalidades',             'ModalidadesController@index');
-Router::get('/financeiro',              'FinanceiroController@index');
-Router::get('/sla',                     'SlaController@index');
+// ============================================================
+// AGENDAMENTOS
+// ============================================================
+Router::get('/agendamentos', 'AgendamentosController@index');
 
-// Análise Preditiva
-Router::get('/preditivo',               'PreditivoController@index');
-Router::get('/api/preditivo',           'PreditivoController@apiDados');
+// ============================================================
+// PACS — Exames DICOM
+// ============================================================
+Router::get('/pacs/exames',            'ExamesPacsController@index');
+Router::get('/pacs/exames/{id}',       'ExamesPacsController@show');
+Router::get('/pacs/modalidades',       'ExamesPacsController@modalidades');
+Router::get('/pacs',                   fn() => header('Location: /estudos'));
 
-// Benchmark
-Router::get('/benchmark',               'BenchmarkController@index');
-Router::get('/api/benchmark',           'BenchmarkController@apiDados');
+// ============================================================
+// CADASTROS
+// ============================================================
+Router::get('/medicos',                'MedicosController@index');
+Router::get('/medicos/create',         'MedicosController@create');
+Router::post('/medicos',               'MedicosController@store');
+Router::get('/medicos/{id}/edit',      'MedicosController@edit');
+Router::post('/medicos/{id}/update',   'MedicosController@update');
+Router::post('/medicos/{id}/toggle',   'MedicosController@toggleStatus');
 
-// Relatórios
-Router::get('/relatorios',              'RelatoriosController@index');
-Router::get('/relatorios/exportar',     'RelatoriosController@exportar');
+Router::get('/unidades',               'UnidadesController@index');
+Router::get('/unidades/create',        'UnidadesController@create');
+Router::post('/unidades',              'UnidadesController@store');
+Router::get('/unidades/{id}/edit',     'UnidadesController@edit');
+Router::post('/unidades/{id}/update',  'UnidadesController@update');
 
-// Importação
-Router::get('/importacao',              'ImportacaoController@index');
-Router::post('/importacao',             'ImportacaoController@processar');
-Router::get('/importacao/{id}/log',     'ImportacaoController@verLog');
-Router::post('/importacao/{id}/delete', 'ImportacaoController@deletar');
+Router::get('/modalidades',            'ModalidadesController@index');
+Router::get('/modalidades/create',     'ModalidadesController@create');
+Router::post('/modalidades',           'ModalidadesController@store');
+Router::get('/modalidades/{id}/edit',  'ModalidadesController@edit');
+Router::post('/modalidades/{id}/update','ModalidadesController@update');
 
-// PACS
-Router::get('/pacs',                    'PacsController@index');
-Router::get('/pacs/create',             'PacsController@create');
-Router::post('/pacs',                   'PacsController@store');
-Router::get('/pacs/{id}/edit',          'PacsController@edit');
-Router::post('/pacs/{id}/update',       'PacsController@update');
-Router::post('/pacs/{id}/sync',         'PacsController@sincronizar');
-Router::post('/pacs/{id}/test',         'PacsController@testar');
-Router::post('/pacs/{id}/delete',       'PacsController@deletar');
+// ============================================================
+// SISTEMA
+// ============================================================
+Router::get('/usuarios',               'UsuariosController@index');
+Router::get('/usuarios/create',        'UsuariosController@create');
+Router::post('/usuarios',              'UsuariosController@store');
+Router::get('/usuarios/{id}/edit',     'UsuariosController@edit');
+Router::post('/usuarios/{id}/update',  'UsuariosController@update');
+Router::post('/usuarios/{id}/toggle',  'UsuariosController@toggleStatus');
 
-// Configurações
-Router::get('/configuracoes',           'ConfiguracoesController@index');
-Router::post('/configuracoes/salvar',   'ConfiguracoesController@salvar');
+Router::get('/configuracoes',          'ConfiguracoesController@index');
+Router::post('/configuracoes/salvar',  'ConfiguracoesController@salvar');
 
-// Usuários
-Router::get('/usuarios',                'UsuariosController@index');
-Router::get('/usuarios/create',         'UsuariosController@create');
-Router::post('/usuarios',               'UsuariosController@store');
-Router::get('/usuarios/{id}/edit',      'UsuariosController@edit');
-Router::post('/usuarios/{id}/update',   'UsuariosController@update');
-Router::post('/usuarios/{id}/toggle',   'UsuariosController@toggleStatus');
-
-// Servidor Orthanc
-Router::get('/servidor',                'ServidorController@index');
-Router::get('/servidor/create',         'ServidorController@create');
-Router::post('/servidor',               'ServidorController@store');
-Router::get('/servidor/{id}/edit',      'ServidorController@edit');
-Router::post('/servidor/{id}/update',   'ServidorController@update');
-Router::get('/servidor/{id}/testar',    'ServidorController@testar');
-
-// API: Status Orthanc (usado pelo badge de login — público, sem auth)
+// ============================================================
+// API — Orthanc ping (público, para status na tela de login)
+// ============================================================
 Router::get('/api/orthanc/ping', 'PacsController@pingPublic');

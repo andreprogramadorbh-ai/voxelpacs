@@ -1,62 +1,70 @@
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="h3 mb-0 text-gray-800"><i class="fa fa-building me-2"></i>Negócios (Empresas)</h1>
-    <a href="/platform/negocios/create" class="btn btn-primary shadow-sm">
-        <i class="fa fa-plus fa-sm text-white-50 me-1"></i> Novo Negócio
-    </a>
+<?php $negocios = $negocios ?? []; ?>
+
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;">
+    <div>
+        <h1 style="font-size:1.3rem;font-weight:700;color:var(--pacs-text);margin-bottom:.25rem;">
+            <i class="fa fa-building me-2 text-pacs-primary"></i>Negócios
+        </h1>
+        <p style="color:var(--pacs-text-muted);font-size:.82rem;">Gerencie os negócios (tenants) cadastrados na plataforma</p>
+    </div>
+    <a href="/platform/negocios/create" class="btn-pacs-primary"><i class="fa fa-plus"></i> Novo Negócio</a>
 </div>
 
-<div class="card shadow mb-4">
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover align-middle" width="100%" cellspacing="0">
-                <thead class="table-light">
-                    <tr>
-                        <th>ID</th>
-                        <th>Empresa</th>
-                        <th>CNPJ</th>
-                        <th>Plano</th>
-                        <th>Status</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if (empty($negocios)): ?>
-                        <tr><td colspan="6" class="text-center py-4">Nenhum negócio cadastrado.</td></tr>
-                    <?php else: ?>
-                        <?php foreach ($negocios as $n): ?>
-                            <tr>
-                                <td>#<?= $n->id ?></td>
-                                <td>
-                                    <div class="fw-bold"><?= htmlspecialchars($n->nome) ?></div>
-                                    <div class="small text-muted"><?= htmlspecialchars($n->slug) ?></div>
-                                </td>
-                                <td><?= htmlspecialchars($n->cnpj ?? 'Não informado') ?></td>
-                                <td><span class="badge bg-info text-dark">Plano <?= $n->plan_id ?></span></td>
-                                <td>
-                                    <?php if ($n->status === 'ativo'): ?>
-                                        <span class="badge bg-success">Ativo</span>
-                                    <?php elseif ($n->status === 'trial'): ?>
-                                        <span class="badge bg-warning text-dark">Trial</span>
-                                    <?php else: ?>
-                                        <span class="badge bg-danger"><?= ucfirst($n->status) ?></span>
-                                    <?php endif; ?>
-                                </td>
-                                <td>
-                                    <a href="/platform/negocios/<?= $n->id ?>/edit" class="btn btn-sm btn-outline-primary" title="Editar">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                    <form action="/platform/negocios/<?= $n->id ?>/impersonate" method="POST" class="d-inline">
-                                        <input type="hidden" name="_csrf_token" value="<?= $_SESSION['csrf_token'] ?? '' ?>">
-                                        <button type="submit" class="btn btn-sm btn-outline-success" title="Acessar como este negócio">
-                                            <i class="fa fa-sign-in-alt"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </tbody>
-            </table>
-        </div>
+<?php if (!empty($_SESSION['success'])): ?>
+    <div class="pacs-alert pacs-alert-success mb-3"><i class="fa fa-check-circle"></i> <?= htmlspecialchars($_SESSION['success']) ?></div>
+    <?php unset($_SESSION['success']); ?>
+<?php endif; ?>
+
+<div class="pacs-card">
+    <div style="overflow-x:auto;">
+        <table class="platform-table">
+            <thead>
+                <tr><th>#</th><th>Nome / Razão Social</th><th>CNPJ</th><th>Plano</th><th>Status</th><th>Cadastro</th><th>Ações</th></tr>
+            </thead>
+            <tbody>
+            <?php if (empty($negocios)): ?>
+                <tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--pacs-text-muted);">
+                    <i class="fa fa-building fa-2x d-block mb-2"></i>
+                    Nenhum negócio cadastrado. <a href="/platform/negocios/create" style="color:var(--pacs-primary);">Cadastrar primeiro</a>
+                </td></tr>
+            <?php else: ?>
+                <?php foreach ($negocios as $n): ?>
+                <?php
+                $nId     = $n->id     ?? $n['id']     ?? 0;
+                $nNome   = $n->nome   ?? $n['nome']   ?? '';
+                $nCnpj   = $n->cnpj   ?? $n['cnpj']   ?? '';
+                $nPlano  = $n->plan_nome ?? $n['plan_nome'] ?? ($n->plano ?? $n['plano'] ?? '—');
+                $nStatus = $n->status ?? $n['status'] ?? 'ativo';
+                $nData   = $n->created_at ?? $n['created_at'] ?? '';
+                $nEmail  = $n->email_contato ?? $n['email_contato'] ?? '';
+                ?>
+                <tr>
+                    <td style="color:var(--pacs-text-muted);"><?= $nId ?></td>
+                    <td>
+                        <div style="font-weight:600;"><?= htmlspecialchars($nNome) ?></div>
+                        <?php if ($nEmail): ?><small style="color:var(--pacs-text-muted);"><?= htmlspecialchars($nEmail) ?></small><?php endif; ?>
+                    </td>
+                    <td style="font-family:monospace;font-size:.78rem;"><?= htmlspecialchars($nCnpj ?: '—') ?></td>
+                    <td><?= htmlspecialchars($nPlano) ?></td>
+                    <td><span class="badge badge-<?= $nStatus === 'ativo' ? 'ativo' : ($nStatus === 'suspenso' ? 'suspenso' : 'inativo') ?>"><?= ucfirst($nStatus) ?></span></td>
+                    <td style="color:var(--pacs-text-muted);font-size:.75rem;">
+                        <?php try { echo (new DateTime($nData))->format('d/m/Y'); } catch (\Throwable $t) { echo '—'; } ?>
+                    </td>
+                    <td>
+                        <div style="display:flex;gap:.3rem;">
+                            <a href="/platform/negocios/<?= $nId ?>/edit" class="pacs-btn" title="Editar"><i class="fa fa-pen"></i></a>
+                            <form method="POST" action="/platform/negocios/<?= $nId ?>/impersonate" style="display:inline;">
+                                <button type="submit" class="pacs-btn" title="Acessar como este negócio"><i class="fa fa-right-to-bracket"></i></button>
+                            </form>
+                            <form method="POST" action="/platform/negocios/<?= $nId ?>/suspend" style="display:inline;" onsubmit="return confirm('Suspender este negócio?')">
+                                <button type="submit" class="pacs-btn" title="Suspender"><i class="fa fa-pause"></i></button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            <?php endif; ?>
+            </tbody>
+        </table>
     </div>
 </div>
