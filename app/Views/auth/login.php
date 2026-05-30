@@ -1,8 +1,7 @@
 <!-- Logo VOXEL PACS -->
 <div class="auth-logo">
     <img src="/assets/img/logo-voxel-pacs.png"
-         alt="VOXEL PACS — Smart Imaging. Secure Data. Better Care."
-         style="max-width:240px;">
+         alt="VOXEL PACS — Smart Imaging. Secure Data. Better Care.">
 </div>
 
 <div class="auth-title">Acesse sua conta</div>

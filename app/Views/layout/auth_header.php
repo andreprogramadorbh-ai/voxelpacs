@@ -28,13 +28,6 @@
             <span class="pill"><i class="fa fa-chart-line"></i> Analytics PACS</span>
             <span class="pill"><i class="fa fa-lock"></i> Auditoria total</span>
         </div>
-        <div class="orthanc-badge">
-            <div class="dot" id="orthancDot"></div>
-            <div>
-                <strong id="orthancStatus">Verificando PACS…</strong><br>
-                <span id="orthancInfo" style="font-size:.72rem">Orthanc · 46.225.51.122:8042</span>
-            </div>
-        </div>
     </div>
 
     <div class="auth-panel">

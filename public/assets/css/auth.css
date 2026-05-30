@@ -133,28 +133,8 @@ html, body {
 .pill i { color: var(--primary); font-size: .75rem; }
 .pill:hover { border-color: var(--border); background: rgba(14,165,233,.07); }
 
-/* Orthanc badge */
-.orthanc-badge {
-    position: absolute; bottom: 40px; left: 70px;
-    display: flex; align-items: center; gap: 10px;
-    background: rgba(10,22,40,.75);
-    border: 1px solid var(--border);
-    border-radius: 12px; padding: 10px 18px;
-    font-size: .78rem; color: var(--muted);
-    backdrop-filter: blur(10px);
-}
-.orthanc-badge .dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: #22c55e;
-    box-shadow: 0 0 0 3px rgba(34,197,94,.2);
-    animation: blink 2.5s ease-in-out infinite;
-    flex-shrink: 0;
-}
-.orthanc-badge .dot.offline {
-    background: #ef4444;
-    box-shadow: 0 0 0 3px rgba(239,68,68,.2);
-}
-.orthanc-badge strong { color: var(--text); font-weight: 500; }
+/* Orthanc badge — oculto */
+.orthanc-badge { display: none !important; }
 
 /* ── PAINEL DIREITO ── */
 .auth-panel {
@@ -180,10 +160,11 @@ html, body {
 }
 
 /* Logo */
-.auth-logo { display: block; text-align: center; margin-bottom: 32px; }
+.auth-logo { display: block; text-align: center; margin-bottom: 28px; }
 .auth-logo img {
-    max-width: 230px; height: auto;
-    filter: drop-shadow(0 0 22px rgba(14,165,233,.3));
+    max-width: 300px; width: 100%; height: auto;
+    border-radius: 12px;
+    filter: drop-shadow(0 4px 28px rgba(14,165,233,.5));
 }
 
 /* Títulos */

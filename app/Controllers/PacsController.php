@@ -34,7 +34,7 @@ class PacsController extends Controller {
 
     // ── Listagem de conexões PACS (autenticado) ──
     public function index(): void {
-        $this->view('servidor/index', ['title' => 'Servidores PACS — VOXES PACS']);
+        $this->view('servidor/index', ['title' => 'Servidores PACS — VOXEL PACS']);
     }
 
     public function create(): void {
